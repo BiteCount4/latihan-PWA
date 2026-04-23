@@ -1,27 +1,31 @@
 {
   "id": "./",
-  "name": "PWA Template Responsif",
-  "short_name": "PWA Demo",
-  "description": "Aplikasi PWA responsif untuk demonstrasi template dasar Progressive Web App dengan dukungan offline dan installable.",
+  "name": "K-2nd Marketplace",
+  "short_name": "K-2nd",
+  "description": "Marketplace merchandise Kpop second seperti album, lightstick, dan photocard dengan fitur tawar harga, chat, dan favorit.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#4F46E5",
-  "theme_color": "#4F46E5",
+  "background_color": "#ffffff",
+  "theme_color": "#800000",
   "orientation": "portrait",
   "lang": "id",
+
   "icons": [
     {
-      "src": "icons/icon-192x192-A.png",
+      "src": "icons/ICON-1.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "icons/icon-512x512-B.png",
+      "src": "icons/ICON-2.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
+
   "screenshots": [
     {
       "src": "icons/screenshot1.png",
@@ -34,21 +38,46 @@
       "type": "image/png"
     }
   ],
+
   "shortcuts": [
     {
-      "name": "Buka Beranda",
+      "name": "Beranda",
       "short_name": "Home",
       "url": "./index.html",
       "icons": [
         {
-          "src": "icons/icon-192x192-A.png",
+          "src": "icons/ICON-1.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Favorit",
+      "short_name": "Fav",
+      "url": "./index.html#fav",
+      "icons": [
+        {
+          "src": "icons/ICON-1.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Keranjang",
+      "short_name": "Cart",
+      "url": "./index.html#cart",
+      "icons": [
+        {
+          "src": "icons/ICON-1.png",
           "sizes": "192x192"
         }
       ]
     }
   ],
+
   "categories": [
-    "productivity",
-    "utilities"
+    "shopping",
+    "lifestyle",
+    "entertainment"
   ]
 }
