@@ -6,7 +6,6 @@
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "display_override": "standalone", 
   "background_color": "#ffffff",
   "theme_color": "#800000",
   "orientation": "portrait",
@@ -29,7 +28,7 @@
 
   "screenshots": [
     {
-      "src": "icons/screenshoot1.png",
+      "src": "icons/screenshot1.png",
       "sizes": "1080x1920",
       "type": "image/png"
     },
