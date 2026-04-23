@@ -29,12 +29,12 @@
 
   "screenshots": [
     {
-      "src": "icons/screenshoot-1.png",
+      "src": "icons/screenshoot1.png",
       "sizes": "1080x1920",
       "type": "image/png"
     },
     {
-      "src": "icons/screenshot-2.png",
+      "src": "icons/screenshot2.png",
       "sizes": "1080x1920",
       "type": "image/png"
     }
