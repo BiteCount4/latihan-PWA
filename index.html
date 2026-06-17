@@ -2,6 +2,7 @@
 <html lang="id">
 
 <head>
+<<<<<<< HEAD
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="mobile-web-app-capable" content="yes">
@@ -19,6 +20,7 @@
             box-sizing: border-box;
         }
 
+        
         :root {
             --primary: #6366f1;
             --primary-dark: #4f46e5;
@@ -399,194 +401,181 @@
             font-weight: 800;
         }
     </style>
+=======
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#4F46E5" />
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="icons/ICON-1.png" type="image/png" />
+<title>PWA Template Responsif</title>
+<link rel="stylesheet" href="assets/style.css" />
+>>>>>>> c80ccb244678f696192b2fc21af344ef2b757025
 </head>
 
-<body>
-    <header class="header">
-        <div class="header-content">
-            <div class="logo">
-                <div class="logo-icon">✓</div>
-                <h1 class="text-judul">TaskFlow</h1>
-            </div>
-            <div class="stats">
-                <div class="stat-item">
-                    <span>📝</span>
-                    <span>Total: <span class="stat-number" id="totalTasks">0</span></span>
-                </div>
-                <div class="stat-item">
-                    <span>✅</span>
-                    <span>Selesai: <span class="stat-number" id="completedTasks">0</span></span>
-                </div>
-            </div>
+<body style="margin:0;font-family:Arial;background:#f5f5f5;">
+
+<!-- HEADER -->
+<header style="background:#800000;color:white;padding:15px;">
+  <h2>𖹭 KPOP MARKET</h2>
+
+  <input id="searchInput" onkeyup="searchProduct()" placeholder="Cari produk..."
+  style="width:100%;padding:10px;border-radius:8px;border:none;margin-top:10px;">
+</header>
+
+<!-- MAIN -->
+<div style="padding:10px;">
+
+<!-- GRID PRODUK -->
+<div style="background:white;padding:10px;border-radius:12px;margin-bottom:10px;">
+  <h3>🔥 Produk untuk Pembeli</h3>
+  <div id="productList" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"></div>
+</div>
+
+<!-- KERANJANG -->
+<div style="background:white;padding:10px;border-radius:12px;margin-bottom:10px;">
+  <h3>🛒 Keranjang</h3>
+  <ul id="cart"></ul>
+</div>
+
+<!-- WISHLIST -->
+<div style="background:white;padding:10px;border-radius:12px;margin-bottom:10px;">
+  <h3>𖹭 Favorit</h3>
+  <ul id="wishlist"></ul>
+</div>
+
+</div>
+
+<script>
+
+/* =====================
+DATA
+===================== */
+
+let produk = [
+  { nama:"BTS Photocard Jungkook", harga:200000, kondisi:"Like New", chat:[] },
+  { nama:"BLACKPINK Album Lisa", harga:300000, kondisi:"Good", chat:[] }
+];
+
+let wishlist = [];
+let keranjang = [];
+
+/* =====================
+RENDER PRODUK
+===================== */
+
+function tampilkanProduk(data = produk){
+
+  const list = document.getElementById("productList");
+  list.innerHTML="";
+
+  data.forEach((item,index)=>{
+
+    list.innerHTML+=`
+      <div style="background:white;border:1px solid #800000;border-radius:10px;padding:10px;">
+
+        <b>${item.nama}</b><br>
+        Rp ${item.harga}<br>
+        <small>${item.kondisi}</small><br><br>
+
+        <!-- CHAT DALAM PRODUK -->
+        <div style="border:1px solid #ddd;padding:5px;height:60px;overflow:auto;font-size:12px;">
+          ${item.chat.map(c=>`💬 ${c}`).join("<br>")}
         </div>
-    </header>
 
-    <div class="container">
-        <div class="input-section">
-            <div class="input-group">
-                <input type="text" id="taskInput" placeholder="Tambahkan tugas baru..."
-                    onkeypress="if(event.key==='Enter') addTask()" />
-                <button class="btn btn-primary" onclick="addTask()">
-                    <span>➕</span>
-                    <span>Tambah</span>
-                </button>
-            </div>
-            <div class="priority-selector">
-                <button class="priority-btn high" onclick="setPriority('high')">🔴 Tinggi</button>
-                <button class="priority-btn medium active" onclick="setPriority('medium')">🟡 Sedang</button>
-                <button class="priority-btn low" onclick="setPriority('low')">🟢 Rendah</button>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressBar" style="width: 0%"></div>
-            </div>
-        </div>
+        <input id="chat${index}" placeholder="chat..." style="width:100%;margin-top:5px;">
+        <button onclick="chatProduk(${index})">Kirim</button>
 
-        <div class="filter-tabs">
-            <button class="filter-tab active" onclick="filterTasks('all')">Semua</button>
-            <button class="filter-tab" onclick="filterTasks('active')">Aktif</button>
-            <button class="filter-tab" onclick="filterTasks('completed')">Selesai</button>
-            <button class="filter-tab" onclick="filterTasks('high')">🔴 Prioritas Tinggi</button>
-            <button class="filter-tab" onclick="filterTasks('medium')">🟡 Prioritas Sedang</button>
-            <button class="filter-tab" onclick="filterTasks('low')">🟢 Prioritas Rendah</button>
-        </div>
+        <br>
 
-        <div class="tasks-list" id="tasksList"></div>
-    </div>
+        <button onclick="beli(${index})">🧾 Beli</button>
+        <button onclick="tawar(${index})">💸 Tawar</button>
+        <button onclick="addCart(${index})">🛒</button>
+        <button onclick="toggleWish('${item.nama}')">𖹭</button>
 
-    <script>
-        let tasks = [];
-        let currentPriority = 'medium';
-        let currentFilter = 'all';
+      </div>
+    `;
+  });
+}
 
-        function loadTasks() {
-            const saved = localStorage.getItem('taskflow_tasks');
-            if (saved) {
-                tasks = JSON.parse(saved);
-                renderTasks();
-            }
-        }
+/* =====================
+CHAT PER PRODUK
+===================== */
 
-        function saveTasks() {
-            localStorage.setItem('taskflow_tasks', JSON.stringify(tasks));
-        }
+function chatProduk(i){
+  let input=document.getElementById("chat"+i);
+  produk[i].chat.push(input.value);
+  input.value="";
+  tampilkanProduk();
+}
 
-        function setPriority(priority) {
-            currentPriority = priority;
-            document.querySelectorAll('.priority-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-        }
+/* =====================
+KERANJANG
+===================== */
 
-        function addTask() {
-            const input = document.getElementById('taskInput');
-            const text = input.value.trim();
+function addCart(i){
+  keranjang.push(produk[i].nama);
+  renderCart();
+}
 
-            if (text === '') return;
+function renderCart(){
+  document.getElementById("cart").innerHTML =
+  keranjang.map(c=>`🛒 ${c}`).join("<br>");
+}
 
-            const task = {
-                id: Date.now(),
-                text: text,
-                completed: false,
-                priority: currentPriority,
-                createdAt: new Date().toLocaleString('id-ID')
-            };
+/* =====================
+WISHLIST (FAVORITE + UNFAVORITE)
+===================== */
 
-            tasks.unshift(task);
-            input.value = '';
-            saveTasks();
-            renderTasks();
-        }
+function toggleWish(nama){
 
-        function toggleTask(id) {
-            const task = tasks.find(t => t.id === id);
-            if (task) {
-                task.completed = !task.completed;
-                saveTasks();
-                renderTasks();
-            }
-        }
+  if(wishlist.includes(nama)){
+    wishlist = wishlist.filter(w=>w!==nama); // UNFAVORITE
+  }else{
+    wishlist.push(nama);
+  }
 
-        function deleteTask(id) {
-            tasks = tasks.filter(t => t.id !== id);
-            saveTasks();
-            renderTasks();
-        }
+  renderWish();
+}
 
-        function filterTasks(filter) {
-            currentFilter = filter;
-            document.querySelectorAll('.filter-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            renderTasks();
-        }
+function renderWish(){
+  document.getElementById("wishlist").innerHTML =
+  wishlist.map(w=>`
+    <li>
+      𖹭 ${w}
+      <button onclick="toggleWish('${w}')">hapus</button>
+    </li>
+  `).join("");
+}
 
-        function renderTasks() {
-            const container = document.getElementById('tasksList');
+/* =====================
+FUNGSI ASLI (TETAP DIPERTAHANKAN)
+===================== */
 
-            let filteredTasks = tasks;
+function searchProduct(){
+  const keyword=document.getElementById("searchInput").value.toLowerCase();
+  const hasil=produk.filter(p=>p.nama.toLowerCase().includes(keyword));
+  tampilkanProduk(hasil);
+}
 
-            if (currentFilter === 'active') {
-                filteredTasks = tasks.filter(t => !t.completed);
-            } else if (currentFilter === 'completed') {
-                filteredTasks = tasks.filter(t => t.completed);
-            } else if (['high', 'medium', 'low'].includes(currentFilter)) {
-                filteredTasks = tasks.filter(t => t.priority === currentFilter);
-            }
+function tawar(i){
+  let p=prompt("Tawar harga:");
+  if(p){
+    produk[i].chat.push("💸 Tawaran: Rp "+p);
+    tampilkanProduk();
+  }
+}
 
-            if (filteredTasks.length === 0) {
-                container.innerHTML = `
-          <div class="empty-state">
-            <div class="empty-icon">📋</div>
-            <h3>Tidak ada tugas</h3>
-            <p>Mulai tambahkan tugas baru untuk memulai!</p>
-          </div>
-        `;
-            } else {
-                container.innerHTML = filteredTasks.map(task => `
-          <div class="task-item ${task.priority}">
-            <div class="task-checkbox ${task.completed ? 'checked' : ''}" onclick="toggleTask(${task.id})">
-              ${task.completed ? '✓' : ''}
-            </div>
-            <div class="task-content">
-              <div class="task-text ${task.completed ? 'completed' : ''}">${task.text}</div>
-              <div class="task-meta">
-                <span class="task-time">🕒 ${task.createdAt}</span>
-                <span>📌 ${task.priority === 'high' ? 'Tinggi' : task.priority === 'medium' ? 'Sedang' : 'Rendah'}</span>
-              </div>
-            </div>
-            <div class="task-actions">
-              <button class="btn-icon btn-delete" onclick="deleteTask(${task.id})">🗑️</button>
-            </div>
-          </div>
-        `).join('');
-            }
+function beli(i){
+  alert("Checkout: "+produk[i].nama);
+}
 
-            updateStats();
-        }
+/* INIT */
+tampilkanProduk();
 
-        function updateStats() {
-            const total = tasks.length;
-            const completed = tasks.filter(t => t.completed).length;
-            const progress = total > 0 ? (completed / total) * 100 : 0;
-
-            document.getElementById('totalTasks').textContent = total;
-            document.getElementById('completedTasks').textContent = completed;
-            document.getElementById('progressBar').style.width = progress + '%';
-        }
-
-        loadTasks();
-
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./service-worker.js')
-                    .then(() => console.log('Service Worker registered'))
-                    .catch(err => console.error('Service Worker error:', err));
-            });
-        }
-    </script>
+</script>
 
 </body>
-
 </html>
